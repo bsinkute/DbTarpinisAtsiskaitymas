@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace DbTarpinisAtsiskaitymas.Models
 {
-    public class Lecture
+    public class DepartmentLecture
     {
         public int LectureId { get; set; }
-        public string LectureName { get; set; }
-        public IList<StudentLecture> StudentLectures { get; set; }
-        public IList<DepartmentLecture> DepartmentLectures { get; set; }
+        public int DepartmentId {  get; set; }
 
+        public Lecture Lecture { get; set; }
+        public Department Department { get; set; }
     }
 }
+

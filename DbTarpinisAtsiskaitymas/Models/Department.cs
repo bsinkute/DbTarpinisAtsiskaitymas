@@ -8,10 +8,12 @@ namespace DbTarpinisAtsiskaitymas.Models
 {
     public class Department
     {
-        public int DepartamentId { get; set; }
-        public string DepartamentName { get; set; }
+        public int DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
         public IList<Student> Students {  get; set; }
-        public IList<Lecture> Lectures { get; set; }
+        public IList<DepartmentLecture> DepartmentLectures { get; set; }
+
+
 
 
     }
