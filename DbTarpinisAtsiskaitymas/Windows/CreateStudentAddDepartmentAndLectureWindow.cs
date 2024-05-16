@@ -1,4 +1,5 @@
-﻿using DbTarpinisAtsiskaitymas.Interfaces;
+﻿using DbTarpinisAtsiskaitymas.Helpers;
+using DbTarpinisAtsiskaitymas.Interfaces;
 using DbTarpinisAtsiskaitymas.Models;
 using DbTarpinisAtsiskaitymas.Services;
 using System;
@@ -35,30 +36,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
             string phone = Console.ReadLine();
 
             var departments = await _departmentService.GetAllDepartments();
-            Console.WriteLine("Department list: ");
-
-            foreach (var department in departments)
-            {
-                Console.WriteLine($"Id: {department.DepartmentId} | Department Name: {department.DepartmentName}");
-            }
-
-            Console.Write("Enter new department ID: ");
-            bool isValidDepartmentId = int.TryParse(Console.ReadLine(), out int newDepartmentId);
-            var departmentExists = departments.Any(x => x.DepartmentId == newDepartmentId);
-
-            while (!isValidDepartmentId || !departmentExists)
-            {
-                if (!isValidDepartmentId)
-                {
-                    Console.Write("Department id must be a number. Enter a valid department id: ");
-                }
-                else if (!departmentExists)
-                {
-                    Console.Write("Department not found. Enter an existing department id: ");
-                }
-                isValidDepartmentId = int.TryParse(Console.ReadLine(), out newDepartmentId);
-                departmentExists = departments.Any(x => x.DepartmentId == newDepartmentId);
-            }
+            var newDepartmentId = ConsoleHelper.SelectDepartment(departments);
 
             var departmentToAssign = departments.First(x => x.DepartmentId == newDepartmentId);
             var student = await _studentService.AddStudent(firstName, lastName, email, phone, newDepartmentId);

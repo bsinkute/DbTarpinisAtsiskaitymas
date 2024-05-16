@@ -75,5 +75,34 @@ namespace DbTarpinisAtsiskaitymas.Services
         {
             return await _universityContext.Lectures.ToListAsync();     
         }
+
+        public async Task<Lecture> AddLecture(string lectureName)
+        {
+            if (string.IsNullOrWhiteSpace(lectureName) || lectureName.Length > 150)
+            {
+                return null;
+            }
+           
+            var lecture = new Lecture
+            {
+                LectureName = lectureName,
+            };
+
+            _universityContext.Lectures.Add(lecture);
+            await _universityContext.SaveChangesAsync();
+            return lecture;
+        }
+
+        public async Task AddLectureDepartment(int lectureId, int departmentId)
+        {
+            var departmentLecture = new DepartmentLecture
+            {
+                DepartmentId = departmentId,
+                LectureId = lectureId,
+            };
+
+            _universityContext.DepartmentLectures.Add(departmentLecture);
+            await _universityContext.SaveChangesAsync();
+        }
     }
 }

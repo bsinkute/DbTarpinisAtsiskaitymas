@@ -1,4 +1,5 @@
-﻿using DbTarpinisAtsiskaitymas.Interfaces;
+﻿using DbTarpinisAtsiskaitymas.Helpers;
+using DbTarpinisAtsiskaitymas.Interfaces;
 using DbTarpinisAtsiskaitymas.Models;
 using System;
 using System.Collections.Generic;
@@ -11,22 +12,18 @@ namespace DbTarpinisAtsiskaitymas.Windows
     public class DisplayDepartmentStudentWindow
     {
         private readonly IStudentService _studentService;
+        private readonly IDepartmentService _departmentService;
 
-        public DisplayDepartmentStudentWindow(IStudentService studentService)
+        public DisplayDepartmentStudentWindow(IStudentService studentService, IDepartmentService departmentService)
         {
             _studentService = studentService;
+            _departmentService = departmentService;
         }
 
         public async Task DisplayDepartmentStudents()
         {
-            Console.Write("Enter department ID: ");
-            bool isValidId = int.TryParse(Console.ReadLine(), out int departmentId);
-
-            if (!isValidId)
-            {
-                Console.WriteLine("Invalid department ID.");
-                return;
-            }
+            var departments = await _departmentService.GetAllDepartments();
+            var departmentId = ConsoleHelper.SelectDepartment(departments);
 
             var students = await _studentService.GetStudentsByDepartmentId(departmentId);
 

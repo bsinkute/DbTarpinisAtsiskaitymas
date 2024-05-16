@@ -1,31 +1,23 @@
-﻿using DbTarpinisAtsiskaitymas.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DbTarpinisAtsiskaitymas.Helpers;
+using DbTarpinisAtsiskaitymas.Interfaces;
 
 namespace DbTarpinisAtsiskaitymas.Windows
 {
     public class DisplayDepartmentLectureWindow
     {
         private readonly ILectureService _lectureService;
+        private readonly IDepartmentService _departmentService;
 
-        public DisplayDepartmentLectureWindow(ILectureService lectureService)
+        public DisplayDepartmentLectureWindow(ILectureService lectureService, IDepartmentService departmentService)
         {
             _lectureService = lectureService;
+            _departmentService = departmentService;
         }
 
         public async Task DisplayDepartmentLectures()
         {
-            Console.Write("Enter department ID: ");
-            bool isValidId = int.TryParse(Console.ReadLine(), out int departmentId);
-
-            if (!isValidId)
-            {
-                Console.WriteLine("Invalid department ID.");
-                return;
-            }
+            var departments = await _departmentService.GetAllDepartments();
+            var departmentId = ConsoleHelper.SelectDepartment(departments);
 
             var lectures = await _lectureService.GetLecturesByDepartmentId(departmentId);
 

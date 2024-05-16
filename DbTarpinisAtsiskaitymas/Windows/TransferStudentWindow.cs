@@ -1,4 +1,5 @@
-﻿using DbTarpinisAtsiskaitymas.Interfaces;
+﻿using DbTarpinisAtsiskaitymas.Helpers;
+using DbTarpinisAtsiskaitymas.Interfaces;
 using DbTarpinisAtsiskaitymas.Models;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace DbTarpinisAtsiskaitymas.Windows
     public class TransferStudentWindow
     {
         private readonly IStudentService _studentService;
+        private readonly IDepartmentService _departmentService;
 
-        public TransferStudentWindow(IStudentService studentService)
+        public TransferStudentWindow(IStudentService studentService, IDepartmentService departmentService)
         {
             _studentService = studentService;
+            _departmentService = departmentService;
         }
 
         public async Task TransferStudent()
@@ -28,14 +31,8 @@ namespace DbTarpinisAtsiskaitymas.Windows
                 return;
             }
 
-            Console.Write("Enter new department ID: ");
-            bool isValidDepartmentId = int.TryParse(Console.ReadLine(), out int newDepartmentId);
-
-            if (!isValidDepartmentId)
-            {
-                Console.WriteLine("Invalid department ID.");
-                return;
-            }
+            var departments = await _departmentService.GetAllDepartments();
+            var newDepartmentId = ConsoleHelper.SelectDepartment(departments);
 
             var student = await _studentService.GetStudentById(studentId);
 
