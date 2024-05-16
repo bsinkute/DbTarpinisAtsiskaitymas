@@ -11,5 +11,7 @@ namespace DbTarpinisAtsiskaitymas.Interfaces
     {
         Task<List<Lecture>> GetLecturesByStudentId(int studentId);
         Task<List<Lecture>> GetLecturesByDepartmentId(int departmentId);
+        Task<List<Lecture>> AssignLecturesToStudent(int studentId, List<int> lectureIds);
+        Task<List<Lecture>> GetAllLectures();
     }
 }

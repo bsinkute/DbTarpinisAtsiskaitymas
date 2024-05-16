@@ -33,5 +33,47 @@ namespace DbTarpinisAtsiskaitymas.Services
                 .ToListAsync();
             return lectures;
         }
+
+        public async Task<List<Lecture>> AssignLecturesToStudent(int studentId, List<int> lectureIds)
+        {
+            var student = await _universityContext.Students
+            .FirstOrDefaultAsync(s => s.StudentId == studentId);
+
+            if (student == null)
+            {
+                return null;
+            }
+
+            var lectures = await _universityContext.Lectures
+            .Where(l => lectureIds.Contains(l.LectureId))
+            .ToListAsync();
+
+            if (!lectures.Any())
+            {
+                return null;
+            }
+
+            foreach (var lecture in lectures)
+            {
+                if (!await _universityContext.StudentLectures
+                    .AnyAsync(sl => sl.StudentId == studentId && sl.LectureId == lecture.LectureId))
+                {
+                    var studentLecture = new StudentLecture
+                    {
+                        StudentId = studentId,
+                        LectureId = lecture.LectureId
+                    };
+                    _universityContext.StudentLectures.Add(studentLecture);
+                }
+            }
+
+            await _universityContext.SaveChangesAsync();
+            return lectures;
+        }
+
+        public async Task<List<Lecture>> GetAllLectures()
+        {
+            return await _universityContext.Lectures.ToListAsync();     
+        }
     }
 }

@@ -35,7 +35,23 @@ namespace DbTarpinisAtsiskaitymas.Services
             await _universityContext.SaveChangesAsync();
         }
 
+        public async Task<List<Department>> GetAllDepartments()
+        {
+            return await _universityContext.Departments
+                .Include(x => x.DepartmentLectures)
+                .ThenInclude(dl => dl.Lecture)
+                .ToListAsync();
+        }
 
+        public async Task<Department> GetDepartmentById(int departmentId)
+        {
+            var department = await _universityContext.Departments
+                .Include(x => x.DepartmentLectures)
+                .ThenInclude(dl => dl.Lecture)
+                .FirstOrDefaultAsync(d => d.DepartmentId == departmentId);
+
+            return department;
+        }
     }
 }
 

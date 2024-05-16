@@ -10,5 +10,8 @@ namespace DbTarpinisAtsiskaitymas.Interfaces
     public interface IDepartmentService
     {
         Task AddDepartment(string departmentName);
+        Task<Department> GetDepartmentById(int departmentId);
+        Task<List<Department>> GetAllDepartments();
+
     }
 }

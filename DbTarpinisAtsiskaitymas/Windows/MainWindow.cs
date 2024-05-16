@@ -13,15 +13,22 @@ namespace DbTarpinisAtsiskaitymas.Windows
         private readonly DisplayStudentLectureWindow _displayStudentLectureWindow;
         private readonly DisplayDepartmentLectureWindow _displayDepartmentLectureWindow;
         private readonly DisplayDepartmentStudentWindow _displayDepartmentStudentWindow;
+        private readonly TransferStudentWindow _transferStudentWindow;
+        private readonly CreateStudentAddDepartmentAndLectureWindow _createStudentAddDepartmentAndLectureWindow;
+
         public MainWindow(IStudentService studentService, 
             DisplayStudentLectureWindow displayStudentLectureWindow, 
             DisplayDepartmentLectureWindow displayDepartmentLectureWindow,
-            DisplayDepartmentStudentWindow displayDepartmentStudentWindow)
+            DisplayDepartmentStudentWindow displayDepartmentStudentWindow,
+            TransferStudentWindow transferStudentWindow,
+            CreateStudentAddDepartmentAndLectureWindow createStudentAddDepartmentAndLectureWindow)
         {
             _studentService = studentService;
             _displayStudentLectureWindow = displayStudentLectureWindow;
             _displayDepartmentLectureWindow = displayDepartmentLectureWindow;
             _displayDepartmentStudentWindow = displayDepartmentStudentWindow;
+            _transferStudentWindow = transferStudentWindow;
+            _createStudentAddDepartmentAndLectureWindow = createStudentAddDepartmentAndLectureWindow;
         }
 
         public async Task Load()
@@ -47,13 +54,13 @@ namespace DbTarpinisAtsiskaitymas.Windows
                         
                         break;
                     case 4:
-                       
+                        await _createStudentAddDepartmentAndLectureWindow.CreateStudentAddDepartmentAndLecture();
                         break;
                     case 5:
-                        
+                        await _transferStudentWindow.TransferStudent();
                         break;
                     case 6:
-                        _displayDepartmentStudentWindow.DisplayDepartmentStudents();
+                        await _displayDepartmentStudentWindow.DisplayDepartmentStudents();
                         break;
                     case 7:
                         await _displayDepartmentLectureWindow.DisplayDepartmentLectures();

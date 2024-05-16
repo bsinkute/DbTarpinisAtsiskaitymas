@@ -103,6 +103,8 @@ namespace DbTarpinisAtsiskaitymas.Database
         public DbSet<Department> Departments { get; set; }
         public DbSet<Lecture> Lectures { get; set; }
         public DbSet<Student> Students { get; set; }
-        
+        public DbSet<StudentLecture> StudentLectures { get; set; }
+        public DbSet<DepartmentLecture> DepartmentLectures { get; set; }
+
     }
 }
