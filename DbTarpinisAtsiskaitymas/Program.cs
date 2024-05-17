@@ -25,7 +25,9 @@ namespace DbTarpinisAtsiskaitymas
             DisplayDepartmentLectureWindow displayDepartmentLectureWindow = new DisplayDepartmentLectureWindow(lectureService, departmentService);
             DisplayStudentLectureWindow displayStudentLectureWindow = new DisplayStudentLectureWindow(lectureService);
             CreateStudentAddDepartmentAndLectureWindow createStudentAddDepartmentAndLectureWindow = new CreateStudentAddDepartmentAndLectureWindow(studentService, departmentService, lectureService);
-            MainWindow mainWindow = new MainWindow(studentService, displayStudentLectureWindow, displayDepartmentLectureWindow, displayDepartmentStudentWindow, transferStudentWindow, createStudentAddDepartmentAndLectureWindow);
+            CreateLectureAndAssignToDepartmentWindow createLectureAndAssignToDepartmentWindow = new CreateLectureAndAssignToDepartmentWindow(departmentService, lectureService);
+            AddLectureToExistingDepartmentWindow addLectureToExistingDepartmentWindow = new AddLectureToExistingDepartmentWindow(departmentService, lectureService);
+            MainWindow mainWindow = new MainWindow(studentService, displayStudentLectureWindow, displayDepartmentLectureWindow, displayDepartmentStudentWindow, transferStudentWindow, createStudentAddDepartmentAndLectureWindow, createLectureAndAssignToDepartmentWindow, addLectureToExistingDepartmentWindow);
             
             return mainWindow;
         }

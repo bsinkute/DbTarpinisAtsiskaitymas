@@ -4,6 +4,7 @@ using DbTarpinisAtsiskaitymas.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,13 +12,11 @@ namespace DbTarpinisAtsiskaitymas.Windows
 {
     public class CreateLectureAndAssignToDepartmentWindow
     {
-        private readonly IStudentService _studentService;
         private readonly IDepartmentService _departmentService;
         private readonly ILectureService _lectureService;
 
-        public CreateLectureAndAssignToDepartmentWindow(IStudentService studentService, IDepartmentService departmentService, ILectureService lectureService)
+        public CreateLectureAndAssignToDepartmentWindow(IDepartmentService departmentService, ILectureService lectureService)
         {
-            _studentService = studentService;
             _departmentService = departmentService;
             _lectureService = lectureService;
         }
@@ -29,6 +28,13 @@ namespace DbTarpinisAtsiskaitymas.Windows
 
             var departments = await _departmentService.GetAllDepartments();
             var departmentId = ConsoleHelper.SelectDepartment(departments);
+
+            var lecture = await _lectureService.AddLecture(lectureName);
+
+            await _lectureService.AddLectureDepartment(lecture.LectureId, departmentId);
+
+            Console.WriteLine($"Lecture `{lectureName}` has been created and added in department with ID `{departmentId}`");
+            Console.ReadLine();
         }
     }
 }
