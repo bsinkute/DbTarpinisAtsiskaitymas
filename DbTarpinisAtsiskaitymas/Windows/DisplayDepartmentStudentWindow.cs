@@ -30,6 +30,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
             if (students == null)
             {
                 Console.WriteLine("No student found for this department.");
+                Console.ReadLine();
                 return;
             }
 

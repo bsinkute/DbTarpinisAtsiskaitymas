@@ -22,14 +22,14 @@ namespace DbTarpinisAtsiskaitymas.Windows
 
         public async Task TransferStudent()
         {
-            Console.Write("Enter student ID: ");
-            bool isValidId = int.TryParse(Console.ReadLine(), out int studentId);
-
-            if (!isValidId)
+            var students = await _studentService.GetAllStudents();
+            if (!students.Any())
             {
-                Console.WriteLine("Invalid student ID.");
+                Console.WriteLine("No students available to transfer.");
+                Console.ReadLine();
                 return;
             }
+            var studentId = ConsoleHelper.SelectStudentId(students);
 
             var departments = await _departmentService.GetAllDepartments();
             var newDepartmentId = ConsoleHelper.SelectDepartment(departments);

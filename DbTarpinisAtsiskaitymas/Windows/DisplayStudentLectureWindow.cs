@@ -1,5 +1,7 @@
-﻿using DbTarpinisAtsiskaitymas.Interfaces;
+﻿using DbTarpinisAtsiskaitymas.Helpers;
+using DbTarpinisAtsiskaitymas.Interfaces;
 using DbTarpinisAtsiskaitymas.Models;
+using DbTarpinisAtsiskaitymas.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,28 +13,32 @@ namespace DbTarpinisAtsiskaitymas.Windows
     public class DisplayStudentLectureWindow
     {
         private readonly ILectureService _lectureService;
+        private readonly IStudentService _studentService;
 
-        public DisplayStudentLectureWindow(ILectureService lectureService)
+        public DisplayStudentLectureWindow(ILectureService lectureService, IStudentService studentService)
         {
             _lectureService = lectureService;
+            _studentService = studentService;
         }
 
         public async Task DisplayStudentLectures()
         {
-            Console.Write("Enter student ID: ");
-            bool isValidId = int.TryParse(Console.ReadLine(), out int studentId);
-
-            if (!isValidId)
+            var students = await _studentService.GetAllStudents();
+            if (!students.Any())
             {
-                Console.WriteLine("Invalid student ID.");
+                Console.WriteLine("No students available.");
+                Console.ReadLine();
                 return;
             }
+            var studentId = ConsoleHelper.SelectStudentId(students);
+
 
             var lectures = await _lectureService.GetLecturesByStudentId(studentId);
 
             if (lectures == null )
             {
                 Console.WriteLine("No lectures found for this student.");
+                Console.ReadLine();
                 return;
             }
 

@@ -23,7 +23,7 @@ namespace DbTarpinisAtsiskaitymas
             TransferStudentWindow transferStudentWindow = new TransferStudentWindow(studentService, departmentService);
             DisplayDepartmentStudentWindow displayDepartmentStudentWindow = new DisplayDepartmentStudentWindow(studentService, departmentService);
             DisplayDepartmentLectureWindow displayDepartmentLectureWindow = new DisplayDepartmentLectureWindow(lectureService, departmentService);
-            DisplayStudentLectureWindow displayStudentLectureWindow = new DisplayStudentLectureWindow(lectureService);
+            DisplayStudentLectureWindow displayStudentLectureWindow = new DisplayStudentLectureWindow(lectureService, studentService);
             CreateStudentAddDepartmentAndLectureWindow createStudentAddDepartmentAndLectureWindow = new CreateStudentAddDepartmentAndLectureWindow(studentService, departmentService, lectureService);
             CreateLectureAndAssignToDepartmentWindow createLectureAndAssignToDepartmentWindow = new CreateLectureAndAssignToDepartmentWindow(departmentService, lectureService);
             AddLectureToExistingDepartmentWindow addLectureToExistingDepartmentWindow = new AddLectureToExistingDepartmentWindow(departmentService, lectureService);

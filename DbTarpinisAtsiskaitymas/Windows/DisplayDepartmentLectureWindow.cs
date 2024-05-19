@@ -24,6 +24,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
             if (lectures == null)
             {
                 Console.WriteLine("No lectures found for this department.");
+                Console.ReadLine();
                 return;
             }
 

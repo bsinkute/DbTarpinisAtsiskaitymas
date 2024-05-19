@@ -103,6 +103,12 @@ namespace DbTarpinisAtsiskaitymas.Helpers
 
         public static int SelectLectureId(List<Lecture> lectures)
         {
+            Console.WriteLine("Available Lectures:");
+            foreach (var lecture in lectures)
+            {
+                Console.WriteLine($"ID: {lecture.LectureId}, Name: {lecture.LectureName}");
+            }
+
             bool isValidId, lectureExists;
             int lectureId;
 
@@ -111,12 +117,36 @@ namespace DbTarpinisAtsiskaitymas.Helpers
                 Console.Write("Enter the id of the lecture you want to assign: ");
                 isValidId = int.TryParse(Console.ReadLine(), out lectureId);
                 lectureExists = lectures.Any(x => x.LectureId == lectureId);
-                if (!isValidId && !lectureExists)
+                if (!isValidId || !lectureExists)
+                {
+                    Console.WriteLine("Invalid lecture ID.");
+                }
+            } while (!isValidId || !lectureExists);
+            return lectureId;
+        }
+
+        public static int SelectStudentId(List<Student> students)
+        {
+            Console.WriteLine("Available Students:");
+            foreach (var student in students)
+            {
+                Console.WriteLine($"ID: {student.StudentId}, First Name: {student.FirstName}, Last Name: {student.LastName} ");
+            }
+
+            bool isValidId, studentExists;
+            int studentId;
+
+            do
+            {
+                Console.Write("Enter the id of the student: ");
+                isValidId = int.TryParse(Console.ReadLine(), out studentId);
+                studentExists = students.Any(x => x.StudentId == studentId);
+                if (!isValidId || !studentExists)
                 {
                     Console.WriteLine("Invalid student ID.");
                 }
-            } while (!isValidId && !lectureExists);
-            return lectureId;
+            } while (!isValidId || !studentExists);
+            return studentId;
         }
     }
 }

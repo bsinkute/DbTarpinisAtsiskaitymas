@@ -23,9 +23,17 @@ namespace DbTarpinisAtsiskaitymas.Windows
 
         public async Task CreateLectureAndAssignToDepartment()
         {
-            Console.Write("Enter lecture name: ");
-            string lectureName = Console.ReadLine();
-
+            string lectureName;
+            do
+            {
+                Console.Write("Enter lecture name: ");
+                lectureName = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(lectureName))
+                {
+                    Console.WriteLine("Lecture name can not be empty.");
+                }
+            } while (string.IsNullOrWhiteSpace(lectureName));
+            
             var departments = await _departmentService.GetAllDepartments();
             var departmentId = ConsoleHelper.SelectDepartment(departments);
 

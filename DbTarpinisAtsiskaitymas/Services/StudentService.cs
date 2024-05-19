@@ -77,5 +77,10 @@ namespace DbTarpinisAtsiskaitymas.Services
             await _universityContext.SaveChangesAsync();
             return student;
         }
+
+        public async Task<List<Student>> GetAllStudents()
+        {
+            return await _universityContext.Students.ToListAsync();
+        }
     }
 }

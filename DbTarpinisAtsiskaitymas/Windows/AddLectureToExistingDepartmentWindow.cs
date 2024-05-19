@@ -25,12 +25,6 @@ namespace DbTarpinisAtsiskaitymas.Windows
                 return;
             }
 
-            Console.WriteLine("Available Lectures:");
-            foreach (var lecture in lectures)
-            {
-                Console.WriteLine($"ID: {lecture.LectureId}, Name: {lecture.LectureName}");
-            }
-
             int lectureId = ConsoleHelper.SelectLectureId(lectures);
             var lectureToAssign = lectures.FirstOrDefault(l => l.LectureId == lectureId);
 

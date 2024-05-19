@@ -32,18 +32,16 @@ namespace DbTarpinisAtsiskaitymas.Windows
                 addMoreStudents = response == "yes";
             } while (addMoreStudents);
 
-
-            Console.WriteLine($"List of lectures which you want to add to a department with ID {department.DepartmentId}");
             var lectures = await _lectureService.GetAllLectures();
-
-            foreach (var lecture in lectures)
-            {
-                Console.WriteLine($"ID: {lecture.LectureId}, Name: {lecture.LectureName}");
-            }
-
             bool addMoreLectures;
             do
             {
+                if (!lectures.Any())
+                {
+                    Console.WriteLine("No lectures available to assign.");
+                    addMoreLectures = false;
+                    continue;
+                }
                 var lectureId = ConsoleHelper.SelectLectureId(lectures);
                 await _lectureService.AddLectureDepartment(lectureId, department.DepartmentId);
                 var lecture = lectures.FirstOrDefault(l => l.LectureId == lectureId);
