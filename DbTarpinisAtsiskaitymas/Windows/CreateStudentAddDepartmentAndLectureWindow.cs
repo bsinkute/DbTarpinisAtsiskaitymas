@@ -26,20 +26,11 @@ namespace DbTarpinisAtsiskaitymas.Windows
 
         public async Task CreateStudentAddDepartmentAndLecture()
         {
-            Console.Write("Enter student first name: ");
-            string firstName = Console.ReadLine();
-            Console.Write("Enter student last name: ");
-            string lastName = Console.ReadLine();
-            Console.Write("Enter student email: ");
-            string email = Console.ReadLine();
-            Console.Write("Enter student phone: ");
-            string phone = Console.ReadLine();
-
             var departments = await _departmentService.GetAllDepartments();
             var newDepartmentId = ConsoleHelper.SelectDepartment(departments);
 
             var departmentToAssign = departments.First(x => x.DepartmentId == newDepartmentId);
-            var student = await _studentService.AddStudent(firstName, lastName, email, phone, newDepartmentId);
+            var student = await ConsoleHelper.CreateStudent(newDepartmentId, _studentService);
             var lecturesToAdd = departmentToAssign.DepartmentLectures.Select(x => x.LectureId).ToList();
 
             await _lectureService.AssignLecturesToStudent(student.StudentId, lecturesToAdd);
@@ -53,26 +44,5 @@ namespace DbTarpinisAtsiskaitymas.Windows
 
             Console.ReadLine();
         }
-
-        //private static int GetLectureToAdd(List<Lecture> lectures)
-        //{
-        //    Console.Write("Enter lecture id to add: ");
-        //    var inputIsNumber = int.TryParse(Console.ReadLine(), out int lectureId);
-        //    var lectureExists = lectures.Any(x => x.LectureId == lectureId);
-        //    while (!inputIsNumber || !lectureExists)
-        //    {
-        //        if (!inputIsNumber)
-        //        {
-        //            Console.Write("Input must be a valid number: ");
-        //        }
-        //        else if (!lectureExists)
-        //        {
-        //            Console.Write("This lecture does not exist: ");
-        //        }
-        //        inputIsNumber = int.TryParse(Console.ReadLine(), out lectureId);
-        //        lectureExists = lectures.Any(x => x.LectureId == lectureId);
-        //    }
-        //    return lectureId;
-        //}
     }
 }

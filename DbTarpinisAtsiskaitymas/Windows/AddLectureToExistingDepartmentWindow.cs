@@ -1,11 +1,5 @@
 ﻿using DbTarpinisAtsiskaitymas.Helpers;
 using DbTarpinisAtsiskaitymas.Interfaces;
-using DbTarpinisAtsiskaitymas.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DbTarpinisAtsiskaitymas.Windows
 {
@@ -27,6 +21,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
             if (!lectures.Any())
             {
                 Console.WriteLine("No lectures available to assign.");
+                Console.ReadLine();
                 return;
             }
 
@@ -36,15 +31,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
                 Console.WriteLine($"ID: {lecture.LectureId}, Name: {lecture.LectureName}");
             }
 
-            Console.Write("Enter the id of the lecture you want to assign: ");
-            bool isValidId = int.TryParse(Console.ReadLine(), out int lectureId);
-
-            if (!isValidId & lectureId <= lectures.Count)
-            {
-                Console.WriteLine("Invalid student ID.");
-                return;
-            }
-
+            int lectureId = ConsoleHelper.SelectLectureId(lectures);
             var lectureToAssign = lectures.FirstOrDefault(l => l.LectureId == lectureId);
 
             var departments = await _departmentService.GetAllDepartments();
@@ -56,5 +43,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
             Console.WriteLine($"Lecture `{lectureToAssign.LectureName}` has been added in department with ID `{departmentId}`");
             Console.ReadLine();
         }
+
+        
     }
 }

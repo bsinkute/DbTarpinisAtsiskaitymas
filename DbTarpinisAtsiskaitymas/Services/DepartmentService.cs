@@ -19,11 +19,11 @@ namespace DbTarpinisAtsiskaitymas.Services
             _universityContext = universityContext;
         }
 
-        public async Task AddDepartment(string departmentName)
+        public async Task<Department> AddDepartment(string departmentName)
         {
             if (string.IsNullOrWhiteSpace(departmentName) || departmentName.Length > 150)
             {
-                return;
+                return null;
             }
 
             var department = new Department
@@ -33,6 +33,7 @@ namespace DbTarpinisAtsiskaitymas.Services
 
             _universityContext.Departments.Add(department);
             await _universityContext.SaveChangesAsync();
+            return department;
         }
 
         public async Task<List<Department>> GetAllDepartments()
@@ -41,16 +42,6 @@ namespace DbTarpinisAtsiskaitymas.Services
                 .Include(x => x.DepartmentLectures)
                 .ThenInclude(dl => dl.Lecture)
                 .ToListAsync();
-        }
-
-        public async Task<Department> GetDepartmentById(int departmentId)
-        {
-            var department = await _universityContext.Departments
-                .Include(x => x.DepartmentLectures)
-                .ThenInclude(dl => dl.Lecture)
-                .FirstOrDefaultAsync(d => d.DepartmentId == departmentId);
-
-            return department;
         }
     }
 }
