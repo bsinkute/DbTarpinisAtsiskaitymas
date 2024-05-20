@@ -24,23 +24,30 @@ namespace DbTarpinisAtsiskaitymas.Windows
                 Console.ReadLine();
                 return;
             }
-            var studentId = ConsoleHelper.SelectStudentId(students);
 
-
-            var lectures = await _lectureService.GetLecturesByStudentId(studentId);
-
-            if (lectures == null )
+            bool displayMoreStudentLectures;
+            do
             {
-                Console.WriteLine("No lectures found for this student.");
-                Console.ReadLine();
-                return;
-            }
+                var studentId = ConsoleHelper.SelectStudentId(students);
+                var lectures = await _lectureService.GetLecturesByStudentId(studentId);
 
-            Console.WriteLine($"Lectures for student ID {studentId}:");
-            foreach (var lecture in lectures)
-            {
-                Console.WriteLine($"- {lecture.LectureName}");
-            }
+                if (lectures == null)
+                {
+                    Console.WriteLine("No lectures found for this student.");
+                    Console.ReadLine();
+                    return;
+                }
+
+                Console.WriteLine($"Lectures for student ID {studentId}:");
+                foreach (var lecture in lectures)
+                {
+                    Console.WriteLine($"- {lecture.LectureName}");
+                }
+                Console.Write("Would you like to display more? (yes/no): ");
+                string response = Console.ReadLine().Trim().ToLower();
+                displayMoreStudentLectures = response == "yes";
+            } while (displayMoreStudentLectures);
+                
             ConsoleHelper.GoBack();
         }
     }

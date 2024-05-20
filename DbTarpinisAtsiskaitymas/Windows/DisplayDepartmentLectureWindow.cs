@@ -18,22 +18,35 @@ namespace DbTarpinisAtsiskaitymas.Windows
         {
             Console.Clear();
             var departments = await _departmentService.GetAllDepartments();
-            var departmentId = ConsoleHelper.SelectDepartment(departments);
-
-            var lectures = await _lectureService.GetLecturesByDepartmentId(departmentId);
-
-            if (lectures == null)
+            if (departments.Count == 0)
             {
-                Console.WriteLine("No lectures found for this department.");
-                Console.ReadLine();
+                Console.WriteLine("No departments found");
+                ConsoleHelper.GoBack();
                 return;
             }
 
-            Console.WriteLine($"Lectures for department ID {departmentId}:");
-            foreach (var lecture in lectures)
+            bool displayMoreDepartmentLectures;
+            do
             {
-                Console.WriteLine($"- {lecture.LectureName}");
-            }
+                var departmentId = ConsoleHelper.SelectDepartment(departments);
+                var lectures = await _lectureService.GetLecturesByDepartmentId(departmentId);
+
+                if (lectures == null)
+                {
+                    Console.WriteLine("No lectures found for this department.");
+                    Console.ReadLine();
+                    return;
+                }
+
+                Console.WriteLine($"Lectures for department ID {departmentId}:");
+                foreach (var lecture in lectures)
+                {
+                    Console.WriteLine($"- {lecture.LectureName}");
+                }
+                Console.Write("Would you like to display more? (yes/no): ");
+                string response = Console.ReadLine().Trim().ToLower();
+                displayMoreDepartmentLectures = response == "yes";
+            } while (displayMoreDepartmentLectures);
             ConsoleHelper.GoBack();
         }
     }
