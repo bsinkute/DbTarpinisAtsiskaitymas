@@ -16,6 +16,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
 
         public async Task DisplayDepartmentLectures()
         {
+            Console.Clear();
             var departments = await _departmentService.GetAllDepartments();
             var departmentId = ConsoleHelper.SelectDepartment(departments);
 

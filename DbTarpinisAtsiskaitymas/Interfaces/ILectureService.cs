@@ -9,6 +9,6 @@ namespace DbTarpinisAtsiskaitymas.Interfaces
         Task<List<Lecture>> AssignLecturesToStudent(int studentId, List<int> lectureIds);
         Task<List<Lecture>> GetAllLectures();
         Task<Lecture> AddLecture(string lectureName);
-        Task AddLectureDepartment(int lectureId, int departmentId);
+        Task<bool> AddLectureDepartment(int lectureId, int departmentId);
     }
 }

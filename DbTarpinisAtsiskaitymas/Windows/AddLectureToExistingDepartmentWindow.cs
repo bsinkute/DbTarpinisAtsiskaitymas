@@ -16,6 +16,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
 
         public async Task AddLectureToExistingDepartment()
         {
+            Console.Clear();
             var lectures = await _lectureService.GetAllLectures();
 
             if (!lectures.Any())
@@ -25,19 +26,41 @@ namespace DbTarpinisAtsiskaitymas.Windows
                 return;
             }
 
-            int lectureId = ConsoleHelper.SelectLectureId(lectures);
-            var lectureToAssign = lectures.FirstOrDefault(l => l.LectureId == lectureId);
-
             var departments = await _departmentService.GetAllDepartments();
-            var departmentId = ConsoleHelper.SelectDepartment(departments);
 
+            while (true)
+            {
+                Console.Clear();
+                int lectureId = ConsoleHelper.SelectLectureId(lectures);
+                var lectureToAssign = lectures.FirstOrDefault(l => l.LectureId == lectureId);
 
-            await _lectureService.AddLectureDepartment(lectureId, departmentId);
+                var departmentsWithoutLecture = departments
+                    .Where(x => !x.DepartmentLectures.Any(y => y.LectureId == lectureId))
+                    .ToList();
 
-            Console.WriteLine($"Lecture `{lectureToAssign.LectureName}` has been added in department with ID `{departmentId}`");
+                int departmentId = ConsoleHelper.SelectDepartment(departmentsWithoutLecture);
+
+                var result = await _lectureService.AddLectureDepartment(lectureId, departmentId);
+
+                if (result)
+                {
+                    Console.WriteLine($"Lecture `{lectureToAssign.LectureName}` has been added to department with ID `{departmentId}`.");
+                }
+                else
+                {
+                    Console.WriteLine($"Lecture `{lectureToAssign.LectureName}` is already assigned to department with ID `{departmentId}`.");
+                }
+
+                Console.Write("Would you like to add another lecture? (yes/no): ");
+                string response = Console.ReadLine().Trim().ToLower();
+
+                if (response != "yes")
+                {
+                    break;
+                }
+            }
+
             Console.ReadLine();
         }
-
-        
-    }
+    } 
 }

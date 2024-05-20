@@ -17,6 +17,8 @@ namespace DbTarpinisAtsiskaitymas.Windows
         }
         public async Task CreateDepartmentAndAddStudentAndLecture()
         {
+            Console.Clear();
+            Console.WriteLine("Creating a new department!");
             Console.Write("Enter department name: ");
             string departmentName = Console.ReadLine();
 
@@ -32,6 +34,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
                 addMoreStudents = response == "yes";
             } while (addMoreStudents);
 
+            Console.WriteLine("Assignment of new lectures!");
             var lectures = await _lectureService.GetAllLectures();
             bool addMoreLectures;
             do
@@ -54,7 +57,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
             } while (addMoreLectures);
 
             Console.WriteLine("Finished adding lectures.");
-            Console.WriteLine($"You added a department {department.DepartmentName} .");
+            Console.WriteLine($"You added a department {department.DepartmentName} with students and lectures.");
             Console.ReadLine();
         }
     }

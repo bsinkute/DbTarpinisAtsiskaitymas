@@ -16,6 +16,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
 
         public async Task TransferStudent()
         {
+            Console.Clear();
             var students = await _studentService.GetAllStudents();
             if (!students.Any())
             {

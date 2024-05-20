@@ -18,6 +18,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
 
         public async Task CreateStudentAddDepartmentAndLecture()
         {
+            Console.Clear();
             var departments = await _departmentService.GetAllDepartments();
             var newDepartmentId = ConsoleHelper.SelectDepartment(departments);
 

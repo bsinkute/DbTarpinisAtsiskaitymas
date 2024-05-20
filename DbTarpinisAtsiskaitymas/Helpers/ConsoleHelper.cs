@@ -15,7 +15,7 @@ namespace DbTarpinisAtsiskaitymas.Helpers
                 Console.WriteLine($"Id: {department.DepartmentId} | Department Name: {department.DepartmentName}");
             }
 
-            Console.Write("Enter new department ID: ");
+            Console.Write("Enter department ID: ");
             bool isValidDepartmentId = int.TryParse(Console.ReadLine(), out int newDepartmentId);
             var departmentExists = departments.Any(x => x.DepartmentId == newDepartmentId);
 
@@ -130,7 +130,7 @@ namespace DbTarpinisAtsiskaitymas.Helpers
             Console.WriteLine("Available Students:");
             foreach (var student in students)
             {
-                Console.WriteLine($"ID: {student.StudentId}, First Name: {student.FirstName}, Last Name: {student.LastName} ");
+                Console.WriteLine($"ID: {student.StudentId}, First Name: {student.FirstName}, Last Name: {student.LastName}, Department Id: {student.DepartmentId}");
             }
 
             bool isValidId, studentExists;

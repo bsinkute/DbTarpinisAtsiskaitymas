@@ -20,7 +20,7 @@ namespace DbTarpinisAtsiskaitymas.Services
                 .ToListAsync();
             return lectures;
         }
-        
+
         public async Task<List<Lecture>> GetLecturesByDepartmentId(int departmentId)
         {
             var lectures = await _universityContext.Lectures
@@ -68,7 +68,7 @@ namespace DbTarpinisAtsiskaitymas.Services
 
         public async Task<List<Lecture>> GetAllLectures()
         {
-            return await _universityContext.Lectures.ToListAsync();     
+            return await _universityContext.Lectures.ToListAsync();
         }
 
         public async Task<Lecture> AddLecture(string lectureName)
@@ -77,7 +77,7 @@ namespace DbTarpinisAtsiskaitymas.Services
             {
                 return null;
             }
-           
+
             var lecture = new Lecture
             {
                 LectureName = lectureName,
@@ -88,8 +88,16 @@ namespace DbTarpinisAtsiskaitymas.Services
             return lecture;
         }
 
-        public async Task AddLectureDepartment(int lectureId, int departmentId)
+        public async Task<bool> AddLectureDepartment(int lectureId, int departmentId)
         {
+            var existingDepartmentLecture = await _universityContext.DepartmentLectures
+                .FirstOrDefaultAsync(dl => dl.DepartmentId == departmentId && dl.LectureId == lectureId);
+
+            if (existingDepartmentLecture != null)
+            {
+                return false;
+            }
+
             var departmentLecture = new DepartmentLecture
             {
                 DepartmentId = departmentId,
@@ -98,6 +106,7 @@ namespace DbTarpinisAtsiskaitymas.Services
 
             _universityContext.DepartmentLectures.Add(departmentLecture);
             await _universityContext.SaveChangesAsync();
+            return true;
         }
     }
 }
