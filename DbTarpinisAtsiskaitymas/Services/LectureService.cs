@@ -68,7 +68,9 @@ namespace DbTarpinisAtsiskaitymas.Services
 
         public async Task<List<Lecture>> GetAllLectures()
         {
-            return await _universityContext.Lectures.ToListAsync();
+            return await _universityContext.Lectures
+                .Include(x => x.DepartmentLectures)
+                .ToListAsync();
         }
 
         public async Task<Lecture> AddLecture(string lectureName)

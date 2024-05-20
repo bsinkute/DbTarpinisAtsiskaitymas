@@ -45,7 +45,10 @@ namespace DbTarpinisAtsiskaitymas.Windows
                     addMoreLectures = false;
                     continue;
                 }
-                var lectureId = ConsoleHelper.SelectLectureId(lectures);
+                var lecturesNotInDepartment = lectures
+                    .Where(x => !x.DepartmentLectures.Any(y => y.DepartmentId == department.DepartmentId))
+                    .ToList();
+                var lectureId = ConsoleHelper.SelectLectureId(lecturesNotInDepartment);
                 await _lectureService.AddLectureDepartment(lectureId, department.DepartmentId);
                 var lecture = lectures.FirstOrDefault(l => l.LectureId == lectureId);
                 Console.WriteLine($"Lecture '{lecture.LectureName}' has been added to department ID '{department.DepartmentId}'.");
