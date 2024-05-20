@@ -20,7 +20,7 @@ namespace DbTarpinisAtsiskaitymas
             ILectureService lectureService = new LectureService(universityContext);
             IStudentService studentService = new StudentService(universityContext);
 
-            TransferStudentWindow transferStudentWindow = new TransferStudentWindow(studentService, departmentService);
+            TransferStudentWindow transferStudentWindow = new TransferStudentWindow(studentService, departmentService, lectureService);
             DisplayDepartmentStudentWindow displayDepartmentStudentWindow = new DisplayDepartmentStudentWindow(studentService, departmentService);
             DisplayDepartmentLectureWindow displayDepartmentLectureWindow = new DisplayDepartmentLectureWindow(lectureService, departmentService);
             DisplayStudentLectureWindow displayStudentLectureWindow = new DisplayStudentLectureWindow(lectureService, studentService);

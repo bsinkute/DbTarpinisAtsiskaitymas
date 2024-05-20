@@ -9,5 +9,6 @@ namespace DbTarpinisAtsiskaitymas.Interfaces
         Task AddStudentDepartment(Student student, int newDepartmentId);
         Task<Student> AddStudent(string firstName, string lastName, string email, string phone, int departmentId);
         Task<List<Student>> GetAllStudents();
+        Task RemoveStudentLectures(int studentId);
     }
 }

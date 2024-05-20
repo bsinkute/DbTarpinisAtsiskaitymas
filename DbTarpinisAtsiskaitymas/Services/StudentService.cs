@@ -77,5 +77,12 @@ namespace DbTarpinisAtsiskaitymas.Services
         {
             return await _universityContext.Students.ToListAsync();
         }
+
+        public async Task RemoveStudentLectures(int studentId)
+        {
+            var studentLectures = _universityContext.StudentLectures.Where(sl => sl.StudentId == studentId);
+            _universityContext.StudentLectures.RemoveRange(studentLectures);
+            await _universityContext.SaveChangesAsync();
+        }
     }
 }
