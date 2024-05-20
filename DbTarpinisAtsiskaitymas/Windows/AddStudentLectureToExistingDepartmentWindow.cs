@@ -3,18 +3,58 @@ using DbTarpinisAtsiskaitymas.Interfaces;
 
 namespace DbTarpinisAtsiskaitymas.Windows
 {
-    public class AddLectureToExistingDepartmentWindow
+    public class AddStudentLectureToExistingDepartmentWindow
     {
         private readonly IDepartmentService _departmentService;
         private readonly ILectureService _lectureService;
+        private readonly TransferStudentWindow _transferStudentWindow;
 
-        public AddLectureToExistingDepartmentWindow(IDepartmentService departmentService, ILectureService lectureService)
+        public AddStudentLectureToExistingDepartmentWindow(
+            IDepartmentService departmentService, 
+            ILectureService lectureService, 
+            TransferStudentWindow transferStudentWindow)
         {
             _departmentService = departmentService;
             _lectureService = lectureService;
+            _transferStudentWindow = transferStudentWindow;
         }
 
-        public async Task AddLectureToExistingDepartment()
+        public async Task AddStudentLectureToExistingDepartment()
+        {
+            while (true)
+            {
+                DisplayMenu();
+                bool isLoadCorect = int.TryParse(Console.ReadLine(), out int loadSelect);
+                while (!isLoadCorect || loadSelect < 1 || loadSelect > 3)
+                {
+                    Console.Write("Please enter a number from 1 to 3: ");
+                    isLoadCorect = int.TryParse(Console.ReadLine(), out loadSelect);
+                }
+                switch (loadSelect)
+                {
+                    case 1:
+                        await _transferStudentWindow.TransferStudent();
+                        break;
+                    case 2:
+                        await AddLectureToDepartment();
+                        break;
+                    default:
+                        return;
+                }
+            }
+        }
+
+        public void DisplayMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("Select an action:");
+            Console.WriteLine("1. Add a student to an existing department");
+            Console.WriteLine("2. Add lectures to an existing department");
+            Console.WriteLine("3. Go back to main menu");
+            Console.Write("Enter a number from 1 to 3: ");
+        }
+
+        public async Task AddLectureToDepartment()
         {
             Console.Clear();
             var lectures = await _lectureService.GetAllLectures();
@@ -59,8 +99,6 @@ namespace DbTarpinisAtsiskaitymas.Windows
                     break;
                 }
             }
-
-            Console.ReadLine();
         }
     } 
 }

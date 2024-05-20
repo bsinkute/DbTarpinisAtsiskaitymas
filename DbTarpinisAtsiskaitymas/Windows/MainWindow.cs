@@ -11,7 +11,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
         private readonly TransferStudentWindow _transferStudentWindow;
         private readonly CreateStudentAddDepartmentAndLectureWindow _createStudentAddDepartmentAndLectureWindow;
         private readonly CreateLectureAndAssignToDepartmentWindow _createLectureAndAssignToDepartmentWindow;
-        private readonly AddLectureToExistingDepartmentWindow _addLectureToExistingDepartmentWindow;
+        private readonly AddStudentLectureToExistingDepartmentWindow _addLectureToExistingDepartmentWindow;
         private readonly CreateDepartmentAndAddStudentAndLectureWindow _createDepartmentAndAddStudentAndLectureWindow;
 
         public MainWindow(IStudentService studentService, 
@@ -21,7 +21,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
             TransferStudentWindow transferStudentWindow,
             CreateStudentAddDepartmentAndLectureWindow createStudentAddDepartmentAndLectureWindow,
             CreateLectureAndAssignToDepartmentWindow createLectureAndAssignToDepartmentWindow,
-            AddLectureToExistingDepartmentWindow addLectureToExistingDepartmentWindow,
+            AddStudentLectureToExistingDepartmentWindow addLectureToExistingDepartmentWindow,
             CreateDepartmentAndAddStudentAndLectureWindow createDepartmentAndAddStudentAndLectureWindow)
 
         {
@@ -53,7 +53,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
                         await _createDepartmentAndAddStudentAndLectureWindow.CreateDepartmentAndAddStudentAndLecture();
                         break;
                     case 2:
-                        await _addLectureToExistingDepartmentWindow.AddLectureToExistingDepartment();
+                        await _addLectureToExistingDepartmentWindow.AddStudentLectureToExistingDepartment();
                         break;
                     case 3:
                         await _createLectureAndAssignToDepartmentWindow.CreateLectureAndAssignToDepartment();
