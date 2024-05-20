@@ -1,10 +1,4 @@
 ﻿using DbTarpinisAtsiskaitymas.Models;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DbTarpinisAtsiskaitymas.Database.InitialData
 {
@@ -33,30 +27,7 @@ namespace DbTarpinisAtsiskaitymas.Database.InitialData
             {
                 DepartmentId = 4,
                 DepartmentName = "Civil Engineering"
-            },
-
-            /*new Department
-            {
-                DepartmentId = 5,
-                DepartmentName = "Mechanical Engineering"
-            },
-
-            new Department
-            {
-                DepartmentId = 6,
-                DepartmentName = "Physics"
-            },
-            new Department
-            {
-                DepartmentId = 7,
-                DepartmentName = "Biology"
-            },
-
-            new Department
-            {
-                DepartmentId = 8,
-                DepartmentName = "Chemistry"
-            } */                  
+            }     
         };
     }
 }

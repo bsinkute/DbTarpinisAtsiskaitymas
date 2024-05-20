@@ -1,9 +1,4 @@
 ﻿using DbTarpinisAtsiskaitymas.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DbTarpinisAtsiskaitymas.Database.InitialData
 {
@@ -28,8 +23,6 @@ namespace DbTarpinisAtsiskaitymas.Database.InitialData
                 LectureId = 3,
                 LectureName = "Civil Engineering Fundamentals"
             },
-
-
         };
     }
 }
