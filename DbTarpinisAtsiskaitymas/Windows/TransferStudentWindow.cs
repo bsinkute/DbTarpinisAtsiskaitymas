@@ -55,7 +55,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
                     Console.WriteLine($"Student {student.FirstName} {student.LastName} has been transferred from department ID {oldDepartmentId} to department ID {newDepartmentId} and assigned new lectures.");
                 }
             }
-            Console.ReadLine();
+            ConsoleHelper.GoBack();
         }
     }
 }

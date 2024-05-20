@@ -1,5 +1,6 @@
 ﻿using DbTarpinisAtsiskaitymas.Helpers;
 using DbTarpinisAtsiskaitymas.Interfaces;
+using DbTarpinisAtsiskaitymas.Models;
 
 namespace DbTarpinisAtsiskaitymas.Windows
 {
@@ -26,16 +27,33 @@ namespace DbTarpinisAtsiskaitymas.Windows
                     Console.WriteLine("Lecture name can not be empty.");
                 }
             } while (string.IsNullOrWhiteSpace(lectureName));
-            
-            var departments = await _departmentService.GetAllDepartments();
-            var departmentId = ConsoleHelper.SelectDepartment(departments);
 
             var lecture = await _lectureService.AddLecture(lectureName);
+            var departments = await _departmentService.GetAllDepartments();
 
-            await _lectureService.AddLectureDepartment(lecture.LectureId, departmentId);
+            bool addToAnotherDepartment;
+            do
+            {
+                var departmentsWithoutLecture = departments
+                    .Where(x => !x.DepartmentLectures.Any(y => y.LectureId == lecture.LectureId))
+                    .ToList();
 
-            Console.WriteLine($"Lecture `{lectureName}` has been created and added in department with ID `{departmentId}`");
-            Console.ReadLine();
+                if (departmentsWithoutLecture.Count == 0)
+                {
+                    break;
+                }
+
+                var departmentId = ConsoleHelper.SelectDepartment(departmentsWithoutLecture);
+                await _lectureService.AddLectureDepartment(lecture.LectureId, departmentId);
+                Console.WriteLine($"Lecture `{lectureName}` has been created and added to department with ID `{departmentId}`");
+                Console.Write("Would you like to add this lecture to another department? (yes/no): ");
+                string response = Console.ReadLine().Trim().ToLower();
+                addToAnotherDepartment = response == "yes";
+
+            } while (addToAnotherDepartment);
+
+
+            ConsoleHelper.GoBack();
         }
     }
 }

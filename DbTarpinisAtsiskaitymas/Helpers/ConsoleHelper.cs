@@ -6,6 +6,11 @@ namespace DbTarpinisAtsiskaitymas.Helpers
 {
     public static class ConsoleHelper
     {
+        public static void GoBack()
+        {
+            Console.Write("Press any key to go back to employee menu. ");
+            Console.ReadKey();
+        }
         public static int SelectDepartment(List<Department> departments)
         {
             Console.WriteLine("Department list: ");

@@ -52,6 +52,12 @@ namespace DbTarpinisAtsiskaitymas.Windows
                 var lecturesNotInDepartment = lectures
                     .Where(x => !x.DepartmentLectures.Any(y => y.DepartmentId == department.DepartmentId))
                     .ToList();
+
+                if (lecturesNotInDepartment.Count == 0)
+                {
+                    break;
+                }
+
                 var lectureId = ConsoleHelper.SelectLectureId(lecturesNotInDepartment);
                 await _lectureService.AddLectureDepartment(lectureId, department.DepartmentId);
                 addedLectureIds.Add(lectureId);
@@ -75,7 +81,8 @@ namespace DbTarpinisAtsiskaitymas.Windows
 
             Console.WriteLine("Finished adding lectures.");
             Console.WriteLine($"You added a department {department.DepartmentName} with students and lectures.");
-            Console.ReadLine();
+
+            ConsoleHelper.GoBack();
         }
     }
 }

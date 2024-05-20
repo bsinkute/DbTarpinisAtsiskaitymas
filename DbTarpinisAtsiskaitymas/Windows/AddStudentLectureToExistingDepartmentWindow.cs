@@ -78,6 +78,11 @@ namespace DbTarpinisAtsiskaitymas.Windows
                     .Where(x => !x.DepartmentLectures.Any(y => y.LectureId == lectureId))
                     .ToList();
 
+                if (departmentsWithoutLecture.Count == 0)
+                {
+                    break;
+                }
+
                 int departmentId = ConsoleHelper.SelectDepartment(departmentsWithoutLecture);
 
                 var result = await _lectureService.AddLectureDepartment(lectureId, departmentId);
@@ -99,6 +104,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
                     break;
                 }
             }
+            ConsoleHelper.GoBack();
         }
     } 
 }

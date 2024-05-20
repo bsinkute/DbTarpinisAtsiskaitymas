@@ -35,7 +35,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
                 Console.WriteLine($" - Lecture `{lecture.LectureName}` has been assigned to student");
             }
 
-            Console.ReadLine();
+            ConsoleHelper.GoBack();
         }
     }
 }

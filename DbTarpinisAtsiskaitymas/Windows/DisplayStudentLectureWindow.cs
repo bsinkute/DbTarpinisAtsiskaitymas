@@ -41,7 +41,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
             {
                 Console.WriteLine($"- {lecture.LectureName}");
             }
-            Console.ReadLine();
+            ConsoleHelper.GoBack();
         }
     }
 }

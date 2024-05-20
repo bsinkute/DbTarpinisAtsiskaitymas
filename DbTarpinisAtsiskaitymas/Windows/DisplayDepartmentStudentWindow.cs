@@ -34,7 +34,7 @@ namespace DbTarpinisAtsiskaitymas.Windows
             {
                 Console.WriteLine($"- {student.FirstName} {student.LastName}");
             }
-            Console.ReadLine();
+            ConsoleHelper.GoBack();
         }
     }
 }
