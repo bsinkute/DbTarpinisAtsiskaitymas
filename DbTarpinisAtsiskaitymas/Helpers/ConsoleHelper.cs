@@ -8,7 +8,7 @@ namespace DbTarpinisAtsiskaitymas.Helpers
     {
         public static void GoBack()
         {
-            Console.Write("Press any key to go back to employee menu. ");
+            Console.Write("Press any key to go back to funcionality list. ");
             Console.ReadKey();
         }
         public static int SelectDepartment(List<Department> departments)

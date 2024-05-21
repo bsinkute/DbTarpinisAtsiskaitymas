@@ -61,7 +61,6 @@ namespace DbTarpinisAtsiskaitymas.Database
                 entity.HasMany(s => s.StudentLectures)
                     .WithOne(sl => sl.Student)
                     .HasForeignKey(sl => sl.StudentId);
-
             });
 
             modelBuilder.Entity<StudentLecture>(entity =>

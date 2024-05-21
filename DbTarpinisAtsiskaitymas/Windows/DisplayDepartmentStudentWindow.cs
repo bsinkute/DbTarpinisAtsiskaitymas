@@ -49,7 +49,6 @@ namespace DbTarpinisAtsiskaitymas.Windows
                 displayMoreDepartmentStudents = response == "yes";
             } while(displayMoreDepartmentStudents);
 
-            
             ConsoleHelper.GoBack();
         }
     }
